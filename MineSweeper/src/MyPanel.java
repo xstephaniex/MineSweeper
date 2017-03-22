@@ -19,6 +19,8 @@ public class MyPanel extends JPanel {
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
 	
+	//TOTAL OF FLAGS THAT CAN BE PUT SAME AS THE TOTAL OF MINES THAT CAN BE PUT
+	public int totalOfFlags = 12;
 	//STATUS CHECK IF THE PLAYER WON
 	public boolean didThePlayerWon = false;
 
@@ -28,7 +30,7 @@ public class MyPanel extends JPanel {
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	//HOLDS THE MINES THAT ARE GOING TO BE PUT IN X AND Y COORDINATES 
 	public int[][] mines = new int[TOTAL_COLUMNS][TOTAL_ROWS];
-	//SAYS IF GRID IS HIDDEN OR PRESSED
+	//KEEPS TABS IF GRID SELECTED IS HIDDEN OR PRESSED
 	public boolean[][]hiddenGrid = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
 	//HOLDS NUMBER OF MINES AROUND THE GRID AFTER LOCALIZING THE MINES AROUND
 	public int[][] numbers = new int[TOTAL_COLUMNS][TOTAL_ROWS];			
@@ -223,4 +225,35 @@ showMines();
 		System.out.println(totalMines);
 		return totalMines;
 	}
+	/**
+	 * @author Stephanie
+	 * 
+	 * @param depending on the number is gonna be its color.
+	 * @return numberColor that represents the color of the number. 
+	 */
+	public Color setNumberColor(int number){
+		Color numberColor = null;
+
+		switch(number){
+
+		case 1	: numberColor = Color.BLACK;
+		break;
+		case 2	: numberColor = Color.red;
+		break;
+		case 3	: numberColor = Color.YELLOW;
+		break;
+		case 4	: numberColor = Color.DARK_GRAY;
+		break;
+		case 5	: numberColor = Color.blue;
+		break;
+		case 6	: numberColor = Color.WHITE;
+		break;
+		case 7	: numberColor = Color.PINK;
+		break;
+		case 8	: numberColor = Color.DARK_GRAY;
+		break;		
+		}
+		return numberColor;	
+	}
+
 }
