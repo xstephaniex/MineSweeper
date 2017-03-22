@@ -38,7 +38,7 @@ public class MyPanel extends JPanel {
 	/////////////////////////////////////////////////
 
 	public MyPanel() { 
-
+System.out.println("hi");
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
 		}
