@@ -191,7 +191,7 @@ public class MyPanel extends JPanel {
 
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {
 			for (int y = 0; y < TOTAL_ROWS; y++) {
-				if(hiddenGrid[x][y]){
+				if(hiddenGrid[x][y]==true){
 					TheCellIsHidden++;
 				}
 			}
@@ -297,7 +297,7 @@ public class MyPanel extends JPanel {
 			FloodFill(x - 1, y + 1);
 
 		}else{
-			if (numbers[x][y] > 0 && hiddenGrid[x][y] && mines[x][y] == 0){
+			if (numbers[x][y] > 0 && hiddenGrid[x][y]==true && mines[x][y] == 0){
 				selectGrid(x, y);
 			}
 			return;
