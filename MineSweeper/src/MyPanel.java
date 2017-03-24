@@ -177,9 +177,9 @@ public class MyPanel extends JPanel {
 	}
 	
 	/**
-	 * @Author Jainel
-	 * IT'S GOING TO TELL IF THERE ARE 12 HIDDEN GRIDS IN THE BOARD
 	 * 
+	 * IT'S GOING TO TELL IF THERE ARE 12 HIDDEN GRIDS IN THE BOARD
+	 * @return RETURNS TRUE IF THERES 12 HIDDEN GRIDS
 	 */
 	public boolean didThePlayerWon(){
 		int TheCellIsHidden = 0;
@@ -301,7 +301,7 @@ public class MyPanel extends JPanel {
 	/**
 	 * @author Stephanie
 	 * 
-	 * @param DEPENDING ON THE NUMBER ITS GONNA BE ITS COLOR
+	 * @param number DEPENDING ON THE NUMBER ITS GONNA BE ITS COLOR
 	 * @return numberColor that represents the color of the number. 
 	 */
 	public Color setNumberColor(int number){
@@ -361,7 +361,9 @@ public class MyPanel extends JPanel {
 		totalOfFlags = 12;
 	}
 	/**
-	 * @author Stephanie & Jainel & Steven
+	 * 
+	 * @param x TAKES THE COORDINATE ON X THAT WAS SELECTED
+	 * @param y TAKES THE COORDINATE OF Y THAT WAS SELECTED
 	 * THIS METHOD IS USED WHEN THE PLAYR SELECTS A GRID
 	 */
 	public void selectGrid(int x, int y){
@@ -387,7 +389,7 @@ public class MyPanel extends JPanel {
 		
 	
 	/**
-	 * @author Stephanie & Jainel & Steven
+	 * 
 	 * STARTS THE GAME
 	 */
 	public void NewGame(){
