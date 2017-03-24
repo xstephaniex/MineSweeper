@@ -8,7 +8,11 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
+/**
+ *
+ *MY PANELS HOLDS ALL THE METHODS USED IN MINESWEEPER AS WELL ALL THE CALCULATIONS MADE
+ *FOR THE GRID AND COORDINATES INSIDE THE COMPONENT
+ */
 public class MyPanel extends JPanel {
 	private static final long serialVersionUID = 3426940946811133635L;
 	private static final int GRID_X = 40;
@@ -21,8 +25,8 @@ public class MyPanel extends JPanel {
 	public int y = -1;
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
-	
-	
+
+
 	//TOTAL OF FLAGS THAT CAN BE PUT SAME AS THE TOTAL OF MINES THAT CAN BE PUT
 	public int totalOfFlags = 12;
 	//STATUS CHECK IF THE PLAYER WON
@@ -36,7 +40,7 @@ public class MyPanel extends JPanel {
 	public int[][] mines = new int[TOTAL_COLUMNS][TOTAL_ROWS];
 	//KEEPS TABS IF GRID SELECTED IS HIDDEN OR PRESSED
 	public boolean[][]hiddenGrid = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
-	
+
 	//HOLDS NUMBER OF MINES AROUND THE GRID AFTER LOCALIZING THE MINES AROUND
 	public int[][] numbers = new int[TOTAL_COLUMNS][TOTAL_ROWS];			
 
@@ -55,9 +59,9 @@ public class MyPanel extends JPanel {
 		if (TOTAL_ROWS + (new Random()).nextInt(1) < 3) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("TOTAL_ROWS must be at least 3!");
 		}
-	
-		
-	//STARTS A NEW GAME
+
+
+		//STARTS A NEW GAME
 		NewGame();
 
 	}
@@ -102,7 +106,7 @@ public class MyPanel extends JPanel {
 			}
 		}
 
-		
+
 		////////////////////////////////////////////////////////////////
 		//DrAWS THE NUMBER AND PAINTS THE GRIDS THAT HAVE MINES AROUND//
 		///////////////////////////////////////////////////////////////
@@ -119,12 +123,12 @@ public class MyPanel extends JPanel {
 
 				Color colorNumber = setNumberColor(numbers[x][y]);
 				g.setColor(colorNumber);
-		if(numbers[x][y]>0 && colorArray[x][y] == Color.lightGray && hiddenGrid[x][y] == false){
-			g.drawString("  "+String.valueOf(numbers[x][y]),GRID_X+((INNER_CELL_SIZE+1)*x),y1+(2*GRID_Y)+((INNER_CELL_SIZE)*y));
-		}
+				if(numbers[x][y]>0 && colorArray[x][y] == Color.lightGray && hiddenGrid[x][y] == false){
+					g.drawString("  "+String.valueOf(numbers[x][y]),GRID_X+((INNER_CELL_SIZE+1)*x),y1+(2*GRID_Y)+((INNER_CELL_SIZE)*y));
+				}
 			}
-		
-			
+
+
 
 		}
 
@@ -175,7 +179,7 @@ public class MyPanel extends JPanel {
 		}
 		return y;
 	}
-	
+
 	/**
 	 * 
 	 * IT'S GOING TO TELL IF THERE ARE 12 HIDDEN GRIDS IN THE BOARD
@@ -183,7 +187,7 @@ public class MyPanel extends JPanel {
 	 */
 	public boolean didThePlayerWon(){
 		int TheCellIsHidden = 0;
-		
+
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {
 			for (int y = 0; y < TOTAL_ROWS; y++) {
 				if(hiddenGrid[x][y]){
@@ -191,9 +195,9 @@ public class MyPanel extends JPanel {
 				}
 			}
 		}
-	return (TheCellIsHidden == 12);
+		return (TheCellIsHidden == 12);
 	}
-	
+
 	/**
 	 * @author Stephanie
 	 * SET RANDOM MINES INSIDE THE GRID
@@ -319,7 +323,7 @@ public class MyPanel extends JPanel {
 		break;
 		case 5	: numberColor = Color.blue;
 		break;
-		
+
 		}
 		return numberColor;	
 	}
@@ -336,7 +340,7 @@ public class MyPanel extends JPanel {
 				mines[x][y] = 0;
 			}
 		}
-		
+
 		for(int x=0;x<TOTAL_ROWS;x++)
 		{
 			for(int y=0;y<TOTAL_COLUMNS;y++)
@@ -348,13 +352,13 @@ public class MyPanel extends JPanel {
 			for (int y = 0; y < TOTAL_ROWS; y++) {
 				hiddenGrid[x][y]=true;
 			}
-			
+
 		}
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {  
 			for (int y = 0; y < TOTAL_ROWS; y++) {
 				colorArray[x][y] = Color.darkGray;
 			}
-			
+
 		}
 		totalMines = 12;
 		didThePlayerWon = false;
@@ -367,27 +371,27 @@ public class MyPanel extends JPanel {
 	 * THIS METHOD IS USED WHEN THE PLAYR SELECTS A GRID
 	 */
 	public void selectGrid(int x, int y){
-		
 
-			if((hiddenGrid[x][y] && colorArray[x][y] != Color.YELLOW)){ //Grid is hidden and isn't a flag
-				if(mines[x][y] == MINE){
-					playerLostTheGame();
-				}else{
-					if(numbers[x][y] > 0){
-						colorArray[x][y] = Color.lightGray;
-						hiddenGrid[x][y] = false;
-						if(didThePlayerWon()){
-							didThePlayerWon = true;
-							playerWonTheGame();
-						}
-					}else if(numbers[x][y] == 0){
-						FloodFill(x, y);
+
+		if((hiddenGrid[x][y] && colorArray[x][y] != Color.YELLOW)){ //Grid is hidden and isn't a flag
+			if(mines[x][y] == MINE){
+				playerLostTheGame();
+			}else{
+				if(numbers[x][y] > 0){
+					colorArray[x][y] = Color.lightGray;
+					hiddenGrid[x][y] = false;
+					if(didThePlayerWon()){
+						didThePlayerWon = true;
+						playerWonTheGame();
 					}
+				}else if(numbers[x][y] == 0){
+					FloodFill(x, y);
 				}
 			}
 		}
-		
-	
+	}
+
+
 	/**
 	 * 
 	 * STARTS THE GAME
@@ -395,18 +399,18 @@ public class MyPanel extends JPanel {
 	public void NewGame(){
 		resetBoard();
 		setRandomMines();
-		
-		
+
+
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {  
 			for (int y = 0; y < TOTAL_ROWS; y++) {
-			
-			
+
+
 				numbers[x][y] = getAllTheMinesAround(x,y);
-				
+
 			}
-			
-			}
-		
+
+		}
+
 	}
 	/**
 	 * IF THE PLAYER LOST THE GAME THE PLAYER HAS THE OPTION TO PLAY AGAIN
@@ -416,7 +420,7 @@ public class MyPanel extends JPanel {
 		repaint();
 		int confirmation = JOptionPane.showConfirmDialog(null, "You lost! Want to play again?", null, JOptionPane.YES_NO_OPTION);
 		if(confirmation == JOptionPane.YES_OPTION){
-			
+
 			resetBoard();
 			NewGame();
 		}
@@ -436,7 +440,7 @@ public class MyPanel extends JPanel {
 
 		int buttonPressed = JOptionPane.showConfirmDialog(null, "YOU WON!!! Want to play the game?", null, JOptionPane.YES_NO_OPTION);
 		if(buttonPressed == JOptionPane.YES_OPTION){
-			
+
 			resetBoard();
 			NewGame();
 		}
@@ -446,8 +450,8 @@ public class MyPanel extends JPanel {
 		}
 	}
 
-			  
-	
+
+
 
 
 }

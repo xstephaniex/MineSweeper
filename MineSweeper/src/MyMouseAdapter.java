@@ -8,6 +8,10 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+/** 
+ * CLASS RESPONSIBLE OF KNOWING WHEN THE PERSON CLICK WITH THE RIGHT MOUSE OR WITH THE LEFT MOUSE
+ *
+ */
 public class MyMouseAdapter extends MouseAdapter {
 	private Random generator = new Random();
 	public void mousePressed(MouseEvent e) {
