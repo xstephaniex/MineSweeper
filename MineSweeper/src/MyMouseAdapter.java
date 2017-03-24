@@ -85,7 +85,7 @@ public class MyMouseAdapter extends MouseAdapter {
 					} else {
 						//Released the mouse button on the same cell where it was pressed
 						
-						myPanel.selectGrid(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
+						myPanel.selectCell(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
 						myPanel.repaint();
 
 						
@@ -107,20 +107,9 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Do nothing
 					} else {
 
-						if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] != Color.WHITE){
+						myPanel.setFlag(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
+						myPanel.repaint();
 
-							if((myPanel.colorArray[myPanel.mouseDownGridX][ myPanel.mouseDownGridY]==Color.red)){
-						
-								myPanel.colorArray[myPanel.mouseDownGridX][ myPanel.mouseDownGridY]=Color.LIGHT_GRAY;
-								myPanel.repaint();
-								myPanel.totalOfFlags++;
-							}else{
-								//Set Flag
-								myPanel.colorArray[myPanel.mouseDownGridX][ myPanel.mouseDownGridY]=Color.red;
-								myPanel.repaint();
-								myPanel.totalOfFlags--;
-							}
-						}
 					}
 				}
 			}
