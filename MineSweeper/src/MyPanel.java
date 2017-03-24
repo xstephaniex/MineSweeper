@@ -1,10 +1,12 @@
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.util.Random;
-import java.util.logging.Logger;
 
+
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel {
@@ -54,11 +56,9 @@ public class MyPanel extends JPanel {
 			throw new RuntimeException("TOTAL_ROWS must be at least 3!");
 		}
 	
-		resetBoard();
-		setRandomMines();
-		showMines();
-		getAllTheMinesAround(3,4);
-		displayNumberOfAdjacentMines();
+		
+	//STARTS A NEW GAME
+		NewGame();
 
 	}
 
@@ -77,7 +77,7 @@ public class MyPanel extends JPanel {
 		////////////////////	
 		//BACKGROUND PAINT//
 		////////////////////	
-		g.setColor(Color.LIGHT_GRAY);
+		g.setColor(Color.CYAN);
 		g.fillRect(x1, y1, width + 1, height + 1);
 		////////////////////
 		//10X10 GRID	  //	
@@ -101,6 +101,34 @@ public class MyPanel extends JPanel {
 				}
 			}
 		}
+
+		
+		////////////////////////////////////////////////////////////////
+		//DrAWS THE NUMBER AND PAINTS THE GRIDS THAT HAVE MINES AROUND//
+		///////////////////////////////////////////////////////////////
+
+		Font gridFont = new Font("Times New Roman",Font.BOLD,24);
+
+		g.setFont(gridFont);
+		for (int x = 0; x < TOTAL_COLUMNS; x++) {
+			for (int y = 0; y < TOTAL_ROWS; y++) {
+				Color c = colorArray[x][y];
+				g.setColor(c);
+				g.fillRect(GRID_X + x1 + ((INNER_CELL_SIZE + 1) * x) + 1, y1 + GRID_Y + ((INNER_CELL_SIZE + 1) * y) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);
+
+
+				Color colorNumber = setNumberColor(numbers[x][y]);
+				g.setColor(colorNumber);
+		if(numbers[x][y]>0 && colorArray[x][y] == Color.lightGray && hiddenGrid[x][y] == false){
+			g.drawString("  "+String.valueOf(numbers[x][y]),GRID_X+((INNER_CELL_SIZE+1)*x),y1+(2*GRID_Y)+((INNER_CELL_SIZE)*y));
+		}
+			}
+		
+			
+
+		}
+
+
 	}
 	public int getGridX(int x, int y) {
 		Insets myInsets = getInsets();
@@ -150,7 +178,7 @@ public class MyPanel extends JPanel {
 	
 	/**
 	 * @Author Jainel
-	 * It's gonna tell if theres 12 mines left in the game
+	 * IT'S GOING TO TELL IF THERE ARE 12 HIDDEN GRIDS IN THE BOARD
 	 * 
 	 */
 	public boolean didThePlayerWon(){
@@ -168,7 +196,7 @@ public class MyPanel extends JPanel {
 	
 	/**
 	 * @author Stephanie
-	 * Set random Mines inside the grid.
+	 * SET RANDOM MINES INSIDE THE GRID
 	 * 
 	 */
 	public void setRandomMines()
@@ -193,7 +221,7 @@ public class MyPanel extends JPanel {
 	/**
 	 * @author Stephanie
 	 * 
-	 * the mines after player lost.
+	 * IF THE PLAYER LOST IS GONNA SHOW THE MINES
 	 * 
 	 */
 	public void showMines(){
@@ -212,10 +240,10 @@ public class MyPanel extends JPanel {
 	}
 	/**
 	 * @author Stephanie
-	 * This method locates and counts the mines that are around the grid.
+	 * THIS METHOD LOCATES AND COUNT THE MINES ADJACENT TO THE GRID
 	 * @param x THIS TAKES THE X COORDINATE
 	 * @param y THIS TAKES THE Y COORDINATE
-	 * @return total of Mines located.
+	 * @return TOTAL OF MINES LOCATED
 	 */
 	public int getAllTheMinesAround(int x, int y){
 
@@ -243,10 +271,37 @@ public class MyPanel extends JPanel {
 		System.out.println(totalMines);
 		return totalMines;
 	}
+	public void FloodFill(int x, int y){
+
+		if( x < 0 || x > 9 || y < 0 || y > 9) return;
+
+		if (numbers[x][y] == 0 && hiddenGrid[x][y] && colorArray[x][y] != Color.red){
+			hiddenGrid[x][y] = false;
+			colorArray[x][y] = Color.LIGHT_GRAY;
+			if(didThePlayerWon()){
+				didThePlayerWon = true;
+				playerWonTheGame();
+			}
+			FloodFill(x + 1, y);
+			FloodFill(x - 1, y );
+			FloodFill(x, y - 1);
+			FloodFill(x, y + 1);
+			FloodFill(x + 1, y + 1);
+			FloodFill(x + 1, y - 1);
+			FloodFill(x - 1, y - 1);
+			FloodFill(x - 1, y + 1);
+
+		}else{
+			if (numbers[x][y] > 0 && hiddenGrid[x][y] && mines[x][y] == 0){
+				selectGrid(x, y);
+			}
+			return;
+		}
+	}
 	/**
 	 * @author Stephanie
 	 * 
-	 * @param depending on the number is gonna be its color.
+	 * @param DEPENDING ON THE NUMBER ITS GONNA BE ITS COLOR
 	 * @return numberColor that represents the color of the number. 
 	 */
 	public Color setNumberColor(int number){
@@ -264,19 +319,14 @@ public class MyPanel extends JPanel {
 		break;
 		case 5	: numberColor = Color.blue;
 		break;
-		case 6	: numberColor = Color.WHITE;
-		break;
-		case 7	: numberColor = Color.PINK;
-		break;
-		case 8	: numberColor = Color.DARK_GRAY;
-		break;		
+		
 		}
 		return numberColor;	
 	}
 	/**
 	 * @author Stephanie
 	 * 
-	 * Resets the board and starts a new Game
+	 * RESETS THE BOARD AND STARTS A NEW GAME
 	 */
 	public void resetBoard(){
 		for(int x=0;x<TOTAL_ROWS;x++)
@@ -312,24 +362,39 @@ public class MyPanel extends JPanel {
 	}
 	/**
 	 * @author Stephanie & Jainel & Steven
-	 * This method is used for it to know player click the mouse.
+	 * THIS METHOD IS USED WHEN THE PLAYR SELECTS A GRID
 	 */
 	public void selectGrid(int x, int y){
 		
-		for (x= 0; x < TOTAL_COLUMNS; x++) {  
-			for (y = 0; y < TOTAL_ROWS; y++) {
-			
-				hiddenGrid[x][y] = false;
-			}			
+
+			if((hiddenGrid[x][y] && colorArray[x][y] != Color.YELLOW)){ //Grid is hidden and isn't a flag
+				if(mines[x][y] == MINE){
+					playerLostTheGame();
+				}else{
+					if(numbers[x][y] > 0){
+						colorArray[x][y] = Color.lightGray;
+						hiddenGrid[x][y] = false;
+						if(didThePlayerWon()){
+							didThePlayerWon = true;
+							playerWonTheGame();
+						}
+					}else if(numbers[x][y] == 0){
+						FloodFill(x, y);
+					}
+				}
+			}
 		}
 		
-	}
+	
 	/**
 	 * @author Stephanie & Jainel & Steven
-	 * Sets the number array to the number of Mines that are adjacent to it.
+	 * STARTS THE GAME
 	 */
-	public void displayNumberOfAdjacentMines(){
-
+	public void NewGame(){
+		resetBoard();
+		setRandomMines();
+		
+		
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {  
 			for (int y = 0; y < TOTAL_ROWS; y++) {
 			
@@ -341,17 +406,46 @@ public class MyPanel extends JPanel {
 			}
 		
 	}
-	
-	public void PlayerLostTheGame(){
-		for (int x = 0; x < TOTAL_COLUMNS; x++) {  
-			for (int y = 0; y < TOTAL_ROWS; y++) {
-if(hiddenGrid[x][y]==false&&mines[x][y] == MINE){
-	
-	showMines();
-}
-			}
+	/**
+	 * IF THE PLAYER LOST THE GAME THE PLAYER HAS THE OPTION TO PLAY AGAIN
+	 */
+	public void playerLostTheGame(){
+		showMines();
+		repaint();
+		int confirmation = JOptionPane.showConfirmDialog(null, "You lost! Want to play again?", null, JOptionPane.YES_NO_OPTION);
+		if(confirmation == JOptionPane.YES_OPTION){
+			JOptionPane.showMessageDialog(null, "Let's get ready!");
+			resetBoard();
+			NewGame();
 		}
-			  
+		else{
+			JOptionPane.showMessageDialog(null, "Thank You for playing!");
+			System.exit(0);
+		}
 	}
+	/**
+	 * 
+	 * IF THE PLAYER WON THE GAME THE PLAYER HAS THE OPTION TO PLAY AGAIN
+	 */
+	public void playerWonTheGame(){
+
+		showMines();
+		repaint();
+
+		int buttonPressed = JOptionPane.showConfirmDialog(null, "You win! Want to play again?", null, JOptionPane.YES_NO_OPTION);
+		if(buttonPressed == JOptionPane.YES_OPTION){
+			JOptionPane.showMessageDialog(null, "Let's get started");
+			resetBoard();
+			NewGame();
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "Thank You for playing!");
+			System.exit(0);
+		}
+	}
+
+			  
+	
+
 
 }
