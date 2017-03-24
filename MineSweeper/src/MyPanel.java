@@ -419,14 +419,14 @@ public class MyPanel extends JPanel {
 	public void playerLostTheGame(){
 		showMines();
 		repaint();
-		int confirmation = JOptionPane.showConfirmDialog(null, "You lost! Want to play again?", null, JOptionPane.YES_NO_OPTION);
+		int confirmation = JOptionPane.showConfirmDialog(null, "YOU LOST!!!!!! Want to play again?", null, JOptionPane.YES_NO_OPTION);
 		if(confirmation == JOptionPane.YES_OPTION){
 
 			resetBoard();
 			NewGame();
 		}
 		else{
-			JOptionPane.showMessageDialog(null, "Thank You for playing!");
+			
 			System.exit(0);
 		}
 	}
@@ -439,14 +439,14 @@ public class MyPanel extends JPanel {
 		showMines();
 		repaint();
 
-		int buttonPressed = JOptionPane.showConfirmDialog(null, "YOU WON!!! Want to play the game?", null, JOptionPane.YES_NO_OPTION);
+		int buttonPressed = JOptionPane.showConfirmDialog(null, "YOU WON!!!!!! Want to play the game?", null, JOptionPane.YES_NO_OPTION);
 		if(buttonPressed == JOptionPane.YES_OPTION){
 
 			resetBoard();
 			NewGame();
 		}
 		else{
-			JOptionPane.showMessageDialog(null, "Thank You for playing!");
+			
 			System.exit(0);
 		}
 	}
