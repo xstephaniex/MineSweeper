@@ -107,7 +107,7 @@ public class MyPanel extends JPanel {
 		//DrAWS THE NUMBER AND PAINTS THE GRIDS THAT HAVE MINES AROUND//
 		///////////////////////////////////////////////////////////////
 
-		Font gridFont = new Font("Times New Roman",Font.BOLD,24);
+		Font gridFont = new Font("Garamond",Font.BOLD,24);
 
 		g.setFont(gridFont);
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {
@@ -414,7 +414,7 @@ public class MyPanel extends JPanel {
 		repaint();
 		int confirmation = JOptionPane.showConfirmDialog(null, "You lost! Want to play again?", null, JOptionPane.YES_NO_OPTION);
 		if(confirmation == JOptionPane.YES_OPTION){
-			JOptionPane.showMessageDialog(null, "Let's get ready!");
+			
 			resetBoard();
 			NewGame();
 		}
@@ -432,9 +432,9 @@ public class MyPanel extends JPanel {
 		showMines();
 		repaint();
 
-		int buttonPressed = JOptionPane.showConfirmDialog(null, "You win! Want to play again?", null, JOptionPane.YES_NO_OPTION);
+		int buttonPressed = JOptionPane.showConfirmDialog(null, "YOU WON!!! Want to play the game?", null, JOptionPane.YES_NO_OPTION);
 		if(buttonPressed == JOptionPane.YES_OPTION){
-			JOptionPane.showMessageDialog(null, "Let's get started");
+			
 			resetBoard();
 			NewGame();
 		}
