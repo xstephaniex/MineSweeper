@@ -374,7 +374,7 @@ public class MyPanel extends JPanel {
 	public void selectGrid(int x, int y){
 
 
-		if((hiddenGrid[x][y] && colorArray[x][y] != Color.YELLOW)){ //Grid is hidden and isn't a flag
+		if((hiddenGrid[x][y] && colorArray[x][y] != Color.YELLOW)){ 
 			if(mines[x][y] == MINE){
 				playerLostTheGame();
 			}else{
@@ -419,8 +419,8 @@ public class MyPanel extends JPanel {
 	public void playerLostTheGame(){
 		showMines();
 		repaint();
-		int confirmation = JOptionPane.showConfirmDialog(null, "YOU LOST!!!!!! Want to play again?", null, JOptionPane.YES_NO_OPTION);
-		if(confirmation == JOptionPane.YES_OPTION){
+		int ok = JOptionPane.showConfirmDialog(null, "YOU LOST!!!!!! Want to play again?", null, JOptionPane.YES_NO_OPTION);
+		if(ok == JOptionPane.YES_OPTION){
 
 			resetBoard();
 			NewGame();
@@ -439,8 +439,8 @@ public class MyPanel extends JPanel {
 		showMines();
 		repaint();
 
-		int buttonPressed = JOptionPane.showConfirmDialog(null, "YOU WON!!!!!! Want to play the game?", null, JOptionPane.YES_NO_OPTION);
-		if(buttonPressed == JOptionPane.YES_OPTION){
+		int hitTheButton = JOptionPane.showConfirmDialog(null, "YOU WON!!!!!! Want to play the game?", null, JOptionPane.YES_NO_OPTION);
+		if(hitTheButton == JOptionPane.YES_OPTION){
 
 			resetBoard();
 			NewGame();
