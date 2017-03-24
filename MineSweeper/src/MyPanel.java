@@ -20,6 +20,7 @@ public class MyPanel extends JPanel {
 	private static final int INNER_CELL_SIZE = 29;
 	private static final int TOTAL_COLUMNS = 10;
 	private static final int TOTAL_ROWS = 10;   
+	//THIS SAYS THERES A MINE 
 	public static final int MINE = -1;
 	public int x = -1;
 	public int y = -1;
