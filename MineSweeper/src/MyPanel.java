@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
@@ -19,6 +20,7 @@ public class MyPanel extends JPanel {
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
 	
+	
 	//TOTAL OF FLAGS THAT CAN BE PUT SAME AS THE TOTAL OF MINES THAT CAN BE PUT
 	public int totalOfFlags = 12;
 	//STATUS CHECK IF THE PLAYER WON
@@ -32,6 +34,7 @@ public class MyPanel extends JPanel {
 	public int[][] mines = new int[TOTAL_COLUMNS][TOTAL_ROWS];
 	//KEEPS TABS IF GRID SELECTED IS HIDDEN OR PRESSED
 	public boolean[][]hiddenGrid = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
+	
 	//HOLDS NUMBER OF MINES AROUND THE GRID AFTER LOCALIZING THE MINES AROUND
 	public int[][] numbers = new int[TOTAL_COLUMNS][TOTAL_ROWS];			
 
@@ -40,7 +43,7 @@ public class MyPanel extends JPanel {
 	/////////////////////////////////////////////////
 
 	public MyPanel() { 
-System.out.println("hi");
+
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
 		}
@@ -51,15 +54,11 @@ System.out.println("hi");
 			throw new RuntimeException("TOTAL_ROWS must be at least 3!");
 		}
 	
-		//HIDDEN GRID
-		for (int x = 0; x < TOTAL_COLUMNS; x++) {  
-			for (int y = 0; y < TOTAL_ROWS; y++) {
-				colorArray[x][y] = Color.CYAN;
-			}
-		}
+		resetBoard();
 		setRandomMines();
-showMines();
-
+		showMines();
+		getAllTheMinesAround(3,4);
+		displayNumberOfAdjacentMines();
 
 	}
 
@@ -148,6 +147,25 @@ showMines();
 		}
 		return y;
 	}
+	
+	/**
+	 * @Author Jainel
+	 * It's gonna tell if theres 12 mines left in the game
+	 * 
+	 */
+	public boolean didThePlayerWon(){
+		int TheCellIsHidden = 0;
+		
+		for (int x = 0; x < TOTAL_COLUMNS; x++) {
+			for (int y = 0; y < TOTAL_ROWS; y++) {
+				if(hiddenGrid[x][y]){
+					TheCellIsHidden++;
+				}
+			}
+		}
+	return (TheCellIsHidden == 12);
+	}
+	
 	/**
 	 * @author Stephanie
 	 * Set random Mines inside the grid.
@@ -163,7 +181,7 @@ showMines();
 			int x = minesRandomized.nextInt(10);
 			int y = minesRandomized.nextInt(10);
 
-			if((mines[x][y] != MINE || totalMines != 0))
+			if((mines[x][y] != MINE))
 			{
 				mines[x][y] = MINE;
 				totalMines--;
@@ -186,7 +204,7 @@ showMines();
 			{
 				if(mines[x][y]==MINE)
 				{
-					colorArray[x][y] = Color.red;
+					colorArray[x][y] = Color.WHITE;
 				}
 			}
 		}
@@ -254,6 +272,86 @@ showMines();
 		break;		
 		}
 		return numberColor;	
+	}
+	/**
+	 * @author Stephanie
+	 * 
+	 * Resets the board and starts a new Game
+	 */
+	public void resetBoard(){
+		for(int x=0;x<TOTAL_ROWS;x++)
+		{
+			for(int y=0;y<TOTAL_COLUMNS;y++)
+			{
+				mines[x][y] = 0;
+			}
+		}
+		
+		for(int x=0;x<TOTAL_ROWS;x++)
+		{
+			for(int y=0;y<TOTAL_COLUMNS;y++)
+			{
+				numbers[x][y]=0;
+			}
+		}
+		for (int x = 0; x < TOTAL_COLUMNS; x++) {  
+			for (int y = 0; y < TOTAL_ROWS; y++) {
+				hiddenGrid[x][y]=true;
+			}
+			
+		}
+		for (int x = 0; x < TOTAL_COLUMNS; x++) {  
+			for (int y = 0; y < TOTAL_ROWS; y++) {
+				colorArray[x][y] = Color.darkGray;
+			}
+			
+		}
+		totalMines = 12;
+		didThePlayerWon = false;
+		totalOfFlags = 12;
+	}
+	/**
+	 * @author Stephanie & Jainel & Steven
+	 * This method is used for it to know player click the mouse.
+	 */
+	public void selectGrid(int x, int y){
+		
+		for (x= 0; x < TOTAL_COLUMNS; x++) {  
+			for (y = 0; y < TOTAL_ROWS; y++) {
+			
+				hiddenGrid[x][y] = false;
+			}			
+		}
+		
+	}
+	/**
+	 * @author Stephanie & Jainel & Steven
+	 * Sets the number array to the number of Mines that are adjacent to it.
+	 */
+	public void displayNumberOfAdjacentMines(){
+
+		for (int x = 0; x < TOTAL_COLUMNS; x++) {  
+			for (int y = 0; y < TOTAL_ROWS; y++) {
+			
+			
+				numbers[x][y] = getAllTheMinesAround(x,y);
+				
+			}
+			
+			}
+		
+	}
+	
+	public void PlayerLostTheGame(){
+		for (int x = 0; x < TOTAL_COLUMNS; x++) {  
+			for (int y = 0; y < TOTAL_ROWS; y++) {
+if(hiddenGrid[x][y]==false&&mines[x][y] == MINE){
+	
+	showMines();
+}
+			}
+		}
+			  
 	}
 
 }

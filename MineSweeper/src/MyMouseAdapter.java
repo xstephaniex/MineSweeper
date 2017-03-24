@@ -78,8 +78,8 @@ public class MyMouseAdapter extends MouseAdapter {
 					} else {
 						//Released the mouse button on the same cell where it was pressed
 						
-//						myPanel.selectGrid(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
-//						myPanel.repaint();
+						myPanel.selectGrid(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
+						myPanel.repaint();
 
 						
 						}
