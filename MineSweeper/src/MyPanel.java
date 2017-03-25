@@ -45,8 +45,8 @@ public class MyPanel extends JPanel {
 	//HOLDS NUMBER OF MINES AROUND THE GRID AFTER LOCALIZING THE MINES AROUND
 	public int[][] numberPutInTheCellForKnowingTheAdjacentMine = new int[TOTAL_COLUMNS][TOTAL_ROWS];			
 
-	
-	
+
+
 	/////////////////////////////////////////////////
 	// CONSTRUCTOR TO INITIALIZE THE MYPANEL CLASS //
 	/////////////////////////////////////////////////
@@ -84,7 +84,7 @@ public class MyPanel extends JPanel {
 		////////////////////	
 		//BACKGROUND PAINT//
 		////////////////////	
-		g.setColor(Color.CYAN);
+		g.setColor(Color.BLACK);
 		g.fillRect(x1, y1, width + 1, height + 1);
 		////////////////////
 		//10X10 GRID	  //	
@@ -119,13 +119,13 @@ public class MyPanel extends JPanel {
 		g.setFont(gridFont);
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {
 			for (int y = 0; y < TOTAL_ROWS; y++) {
-				
+
 
 				Color colorNumber = setNumberColor(numberPutInTheCellForKnowingTheAdjacentMine[x][y]);
 				g.setColor(colorNumber);
 				if(numberPutInTheCellForKnowingTheAdjacentMine[x][y]>0 && colorArray[x][y] == Color.lightGray && hiddenGrid[x][y] == false&&colorArray[x][y]!=Color.red){
 					g.drawString("  "+String.valueOf(numberPutInTheCellForKnowingTheAdjacentMine[x][y]),GRID_X+((INNER_CELL_SIZE+1)*x),y1+(2*GRID_Y)+((INNER_CELL_SIZE)*y));
-	
+
 				}
 			}
 		}
@@ -134,8 +134,8 @@ public class MyPanel extends JPanel {
 		///////////////////////////////////////////////////////////////////
 		Font flagCounterFont = new Font("Garamond",Font.BOLD,12);
 		g.setFont(flagCounterFont);
-//		g.setColor(Color.cyan);
-//		g.fillRect(getWidth()/12, getHeight()-370, 100, 30);
+		//		g.setColor(Color.cyan);
+		//		g.fillRect(getWidth()/12, getHeight()-370, 100, 30);
 		g.setColor(Color.red);
 		g.drawString("Flags:"+String.valueOf(totalOfFlags), getWidth()/10+2, getHeight()-350);
 
@@ -224,7 +224,7 @@ public class MyPanel extends JPanel {
 			{
 				mines[x][y] = MINE;
 				totalMines--;
-			System.out.println("(x,y)"+"("+x+","+y+")");
+				
 			}
 		}
 	}
@@ -267,11 +267,11 @@ public class MyPanel extends JPanel {
 		if(Y>=9){y_Bot = 9;}else{y_Bot = Y+1;}
 		if(Y==0){y_Top = 0;}else{y_Top = Y-1;}
 
-	
-		
+
+
 		for(int a= x_Left;a<=x_Right;a++ ){
 			for(int b = y_Top;b<=y_Bot;b++){
-			
+
 				if((a==X && b == Y)|| mines[X][Y] == MINE){
 					continue;
 				}else{
@@ -431,13 +431,14 @@ public class MyPanel extends JPanel {
 		showMines();
 		repaint();
 		int ok = JOptionPane.showConfirmDialog(null, "YOU LOST!!!!!! Want to play again?", null, JOptionPane.YES_NO_OPTION);
+
 		if(ok == JOptionPane.YES_OPTION){
 
 			resetBoard();
 			NewGame();
 		}
 		else{
-			
+
 			System.exit(0);
 		}
 	}
@@ -451,37 +452,37 @@ public class MyPanel extends JPanel {
 		repaint();
 
 		int hitTheButton = JOptionPane.showConfirmDialog(null, "YOU WON!!!!!! Want to play the game?", null, JOptionPane.YES_NO_OPTION);
-	
+
 		if(hitTheButton == JOptionPane.YES_OPTION){
 
 			resetBoard();
 			NewGame();
 		}
 		else{
-			
+
 			System.exit(0);
 		}
 	}
 
-public void setFlag(int x, int y){
-	
-	if(colorArray[x][y] != Color.WHITE){
+	public void setFlag(int x, int y){
 
-		if((colorArray[x][y]==Color.red)){
-	
-			colorArray[x][y]=Color.darkGray;
-			repaint();
-			totalOfFlags++;
-		}else if(colorArray[x][y]!=Color.red&& hiddenGrid[x][y] == true){
-		////////////////////////////////
-		//	PUTS THE FLAG	      	  //
-		///////////////////////////////	
-			colorArray[x][y]=Color.red;
-			repaint();
-			totalOfFlags--;
+		if(colorArray[x][y] != Color.WHITE){
+
+			if((colorArray[x][y]==Color.red)){
+
+				colorArray[x][y]=Color.darkGray;
+				repaint();
+				totalOfFlags++;
+			}else if(colorArray[x][y]!=Color.red&& hiddenGrid[x][y] == true){
+				////////////////////////////////
+				//	PUTS THE FLAG	      	  //
+				///////////////////////////////	
+				colorArray[x][y]=Color.red;
+				repaint();
+				totalOfFlags--;
+			}
 		}
 	}
-}
 
 
 
