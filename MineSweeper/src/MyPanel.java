@@ -126,10 +126,16 @@ public class MyPanel extends JPanel {
 	
 				}
 			}
-
-
-
 		}
+		////////////////////////////////////////////////////////////////////
+		//DRAWS THE NUMBER THAT COUNTS THE NUMBER OF FLAG PUT IN THE BOARD//
+		///////////////////////////////////////////////////////////////////
+		Font flagCounterFont = new Font("Garamond",Font.BOLD,12);
+		g.setFont(flagCounterFont);
+//		g.setColor(Color.cyan);
+//		g.fillRect(getWidth()/12, getHeight()-370, 100, 30);
+		g.setColor(Color.red);
+		g.drawString("Flags:"+String.valueOf(totalOfFlags), getWidth()/10+2, getHeight()-350);
 
 
 	}
@@ -216,8 +222,7 @@ public class MyPanel extends JPanel {
 			{
 				mines[x][y] = MINE;
 				totalMines--;
-				System.out.println("(x,y) ("+x+" , "+y+")");
-				System.out.println(MINE);
+			System.out.println("(x,y)"+"("+x+","+y+")");
 			}
 		}
 	}
@@ -274,7 +279,7 @@ public class MyPanel extends JPanel {
 				}
 			}
 		}
-		System.out.println(totalMines);
+
 		return totalMines;
 	}
 	public void FloodFill(int x, int y){
@@ -323,7 +328,12 @@ public class MyPanel extends JPanel {
 		break;
 		case 4	: numberColor = Color.DARK_GRAY;
 		break;
-	
+		case 5	: numberColor = Color.CYAN;
+		break;
+		case 6	: numberColor = Color.PINK;
+		break;
+		case 7	: numberColor = Color.ORANGE;
+		break;
 		}
 		return numberColor;	
 	}
@@ -439,6 +449,7 @@ public class MyPanel extends JPanel {
 		repaint();
 
 		int hitTheButton = JOptionPane.showConfirmDialog(null, "YOU WON!!!!!! Want to play the game?", null, JOptionPane.YES_NO_OPTION);
+	
 		if(hitTheButton == JOptionPane.YES_OPTION){
 
 			resetBoard();
@@ -455,7 +466,7 @@ public void setFlag(int x, int y){
 
 		if((colorArray[x][y]==Color.red)){
 	
-			colorArray[x][y]=Color.LIGHT_GRAY;
+			colorArray[x][y]=Color.darkGray;
 			repaint();
 			totalOfFlags++;
 		}else if(colorArray[x][y]!=Color.red&& hiddenGrid[x][y] == true){
