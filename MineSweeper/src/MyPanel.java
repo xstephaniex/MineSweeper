@@ -121,8 +121,9 @@ public class MyPanel extends JPanel {
 
 				Color colorNumber = setNumberColor(numberPutInTheCellForKnowingTheAdjacentMine[x][y]);
 				g.setColor(colorNumber);
-				if(numberPutInTheCellForKnowingTheAdjacentMine[x][y]>0 && colorArray[x][y] == Color.lightGray && hiddenGrid[x][y] == false){
+				if(numberPutInTheCellForKnowingTheAdjacentMine[x][y]>0 && colorArray[x][y] == Color.lightGray && hiddenGrid[x][y] == false&&colorArray[x][y]!=Color.red){
 					g.drawString("  "+String.valueOf(numberPutInTheCellForKnowingTheAdjacentMine[x][y]),GRID_X+((INNER_CELL_SIZE+1)*x),y1+(2*GRID_Y)+((INNER_CELL_SIZE)*y));
+	
 				}
 			}
 
@@ -247,21 +248,24 @@ public class MyPanel extends JPanel {
 	 * @param y THIS TAKES THE Y COORDINATE
 	 * @return TOTAL OF MINES LOCATED
 	 */
-	public int getAllTheMinesAround(int x, int y){
+	public int getAllTheMinesAround(int X, int Y){
 
 		int totalMines = 0;
-		int xright;
-		int xleft;
-		int ytop;
-		int ybottom;
-		if(x>=9){xright = 9;}else{xright=x+1;}
-		if(x== 0){xleft = 0;}else{xleft=x-1;};
-		if(y>=9){ybottom = 9;}else{ybottom = y+1;}
-		if(y==0){ytop = 0;}else{ytop = y-1;}
+		int x_Right;
+		int x_Left;
+		int y_Top;
+		int y_Bot;
+		if(X>=9){x_Right = 9;}else{x_Right=X+1;}
+		if(X== 0){x_Left = 0;}else{x_Left=X-1;}
+		if(Y>=9){y_Bot = 9;}else{y_Bot = Y+1;}
+		if(Y==0){y_Top = 0;}else{y_Top = Y-1;}
 
-		for(int a= xleft;a<=xright;a++ ){
-			for(int b = ytop;b<=ybottom;b++){
-				if((a==x && b == y)|| mines[x][y] == MINE){
+	
+		
+		for(int a= x_Left;a<=x_Right;a++ ){
+			for(int b = y_Top;b<=y_Bot;b++){
+			
+				if((a==X && b == Y)|| mines[X][Y] == MINE){
 					continue;
 				}else{
 					if(mines[a][b] == MINE){
@@ -454,8 +458,10 @@ public void setFlag(int x, int y){
 			colorArray[x][y]=Color.LIGHT_GRAY;
 			repaint();
 			totalOfFlags++;
-		}else{
-			//Set Flag
+		}else if(colorArray[x][y]!=Color.red&& hiddenGrid[x][y] == true){
+		////////////////////////////////
+		//	PUTS THE FLAG	      	  //
+		///////////////////////////////	
 			colorArray[x][y]=Color.red;
 			repaint();
 			totalOfFlags--;
