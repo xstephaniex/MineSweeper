@@ -45,6 +45,8 @@ public class MyPanel extends JPanel {
 	//HOLDS NUMBER OF MINES AROUND THE GRID AFTER LOCALIZING THE MINES AROUND
 	public int[][] numberPutInTheCellForKnowingTheAdjacentMine = new int[TOTAL_COLUMNS][TOTAL_ROWS];			
 
+	
+	
 	/////////////////////////////////////////////////
 	// CONSTRUCTOR TO INITIALIZE THE MYPANEL CLASS //
 	/////////////////////////////////////////////////
@@ -462,6 +464,7 @@ public class MyPanel extends JPanel {
 	}
 
 public void setFlag(int x, int y){
+	
 	if(colorArray[x][y] != Color.WHITE){
 
 		if((colorArray[x][y]==Color.red)){
